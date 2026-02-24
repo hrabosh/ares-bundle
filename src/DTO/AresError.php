@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Dto;
+namespace Hrabo\AresBundle\DTO;
 
 final readonly class AresError
 {

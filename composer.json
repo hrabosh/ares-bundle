@@ -1,5 +1,5 @@
 {
-  "name": "lustrace/ares-bundle",
+  "name": "hrabo/ares-bundle",
   "description": "Symfony bundle for ARES (Administrativní registr ekonomických subjektů) REST API integration.",
   "type": "symfony-bundle",
   "license": "MIT",
@@ -22,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Lustrace\\AresBundle\\": "src/"
+      "Hrabo\\AresBundle\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Lustrace\\AresBundle\\Tests\\": "tests/"
+      "Hrabo\\AresBundle\\Tests\\": "tests/"
     }
   },
   "scripts": {

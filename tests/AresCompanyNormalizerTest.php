@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Tests;
+namespace Hrabo\AresBundle\Tests;
 
-use Lustrace\AresBundle\Enum\Dataset;
-use Lustrace\AresBundle\Normalizer\AresCompanyNormalizer;
+use Hrabo\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Normalizer\AresCompanyNormalizer;
 use PHPUnit\Framework\TestCase;
 
 final class AresCompanyNormalizerTest extends TestCase

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Client;
+namespace Hrabo\AresBundle\Client;
 
-use Lustrace\AresBundle\Dto\CompanyLookupResult;
-use Lustrace\AresBundle\Dto\DatasetResult;
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\DTO\CompanyLookupResult;
+use Hrabo\AresBundle\DTO\DatasetResult;
+use Hrabo\AresBundle\Enum\Dataset;
 
 interface AresClientInterface
 {

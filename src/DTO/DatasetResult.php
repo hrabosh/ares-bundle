@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Dto;
+namespace Hrabo\AresBundle\DTO;
 
-use Lustrace\AresBundle\Enum\Dataset;
-use Lustrace\AresBundle\Enum\DatasetStatus;
+use Hrabo\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\DatasetStatus;
 
 final readonly class DatasetResult
 {

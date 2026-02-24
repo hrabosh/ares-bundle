@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Client;
+namespace Hrabo\AresBundle\Client;
 
 /**
  * Immutable configuration for ARES client.

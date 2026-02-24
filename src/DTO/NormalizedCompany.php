@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Dto;
+namespace Hrabo\AresBundle\DTO;
 
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\Dataset;
 
 final readonly class NormalizedCompany
 {

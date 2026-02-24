@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Enum;
+namespace Hrabo\AresBundle\Enum;
 
 enum DatasetStatus: string
 {

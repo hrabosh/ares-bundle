@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Tests;
+namespace Hrabo\AresBundle\Tests;
 
-use Lustrace\AresBundle\Client\AresClient;
-use Lustrace\AresBundle\Client\AresClientOptions;
-use Lustrace\AresBundle\Enum\Dataset;
-use Lustrace\AresBundle\Enum\DatasetStatus;
-use Lustrace\AresBundle\Normalizer\AresCompanyNormalizer;
-use Lustrace\AresBundle\RateLimit\AresRateLimiter;
+use Hrabo\AresBundle\Client\AresClient;
+use Hrabo\AresBundle\Client\AresClientOptions;
+use Hrabo\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\DatasetStatus;
+use Hrabo\AresBundle\Normalizer\AresCompanyNormalizer;
+use Hrabo\AresBundle\RateLimit\AresRateLimiter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;

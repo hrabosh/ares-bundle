@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Client\Exception;
+namespace Hrabo\AresBundle\Client\Exception;
 
-use Lustrace\AresBundle\Dto\AresError;
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\DTO\AresError;
+use Hrabo\AresBundle\Enum\Dataset;
 
 final class AresApiException extends \RuntimeException
 {

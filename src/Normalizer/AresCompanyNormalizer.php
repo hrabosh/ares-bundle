@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Normalizer;
+namespace Hrabo\AresBundle\Normalizer;
 
-use Lustrace\AresBundle\Dto\Address;
-use Lustrace\AresBundle\Dto\NormalizedCompany;
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\DTO\Address;
+use Hrabo\AresBundle\DTO\NormalizedCompany;
+use Hrabo\AresBundle\Enum\Dataset;
 
 final class AresCompanyNormalizer
 {

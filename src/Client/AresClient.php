@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Client;
+namespace Hrabo\AresBundle\Client;
 
-use Lustrace\AresBundle\Client\Exception\AresApiException;
-use Lustrace\AresBundle\Dto\AresError;
-use Lustrace\AresBundle\Dto\CompanyLookupResult;
-use Lustrace\AresBundle\Dto\DatasetResult;
-use Lustrace\AresBundle\Enum\Dataset;
-use Lustrace\AresBundle\Enum\DatasetStatus;
-use Lustrace\AresBundle\Normalizer\AresCompanyNormalizer;
-use Lustrace\AresBundle\Normalizer\IcoNormalizer;
-use Lustrace\AresBundle\RateLimit\AresRateLimiter;
+use Hrabo\AresBundle\Client\Exception\AresApiException;
+use Hrabo\AresBundle\DTO\AresError;
+use Hrabo\AresBundle\DTO\CompanyLookupResult;
+use Hrabo\AresBundle\DTO\DatasetResult;
+use Hrabo\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\DatasetStatus;
+use Hrabo\AresBundle\Normalizer\AresCompanyNormalizer;
+use Hrabo\AresBundle\Normalizer\IcoNormalizer;
+use Hrabo\AresBundle\RateLimit\AresRateLimiter;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\DependencyInjection;
+namespace Hrabo\AresBundle\DependencyInjection;
 
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\Dataset;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\Normalizer;
+namespace Hrabo\AresBundle\Normalizer;
 
 final class IcoNormalizer
 {

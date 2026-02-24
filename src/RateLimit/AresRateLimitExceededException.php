@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\RateLimit;
+namespace Hrabo\AresBundle\RateLimit;
 
 final class AresRateLimitExceededException extends \RuntimeException
 {

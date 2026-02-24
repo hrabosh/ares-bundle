@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Lustrace\AresBundle\DependencyInjection;
+namespace Hrabo\AresBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
-final class LustraceAresExtension extends Extension
+final class HraboAresExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {

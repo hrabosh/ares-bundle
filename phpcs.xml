@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="LustraceAresBundle">
+    <description>Code style rules for LustraceAresBundle (Symfony standard).</description>
+
+    <!-- Make sure the Symfony ruleset is discoverable -->
+    <config name="installed_paths" value="vendor/escapestudios/symfony2-coding-standard"/>
+
+    <arg value="p"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <rule ref="Symfony">
+        <!-- Symfony2 standard is strict about some legacy constructs. Keep the bundle pragmatic. -->
+        <exclude name="Symfony.Files.LineLength.TooLong"/>
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+    </rule>
+
+    <file>src</file>
+    <file>tests</file>
+</ruleset>

@@ -1,0 +1,43 @@
+{
+  "name": "lustrace/ares-bundle",
+  "description": "Symfony bundle for ARES (Administrativní registr ekonomických subjektů) REST API integration.",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.1",
+    "psr/log": "^1.1 || ^2.0 || ^3.0",
+    "symfony/cache": "^6.4 || ^7.0 || ^8.0",
+    "symfony/config": "^6.4 || ^7.0 || ^8.0",
+    "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+    "symfony/http-client": "^6.4 || ^7.0 || ^8.0",
+    "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
+    "symfony/options-resolver": "^6.4 || ^7.0 || ^8.0",
+    "symfony/rate-limiter": "^6.4 || ^7.0 || ^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5 || ^11.0",
+    "symfony/phpunit-bridge": "^6.4 || ^7.0 || ^8.0",
+    "squizlabs/php_codesniffer": "^3.10",
+    "escapestudios/symfony2-coding-standard": "^3.13"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lustrace\\AresBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lustrace\\AresBundle\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "phpcs": "phpcs -p",
+    "phpcbf": "phpcbf -p"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1-dev"
+    }
+  }
+}

@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="LustraceAresBundle">
-    <description>Code style rules for LustraceAresBundle (Symfony standard).</description>
+<ruleset name="HraboAresBundle">
+    <description>Code style rules for HraboAresBundle (Symfony standard).</description>
 
-    <!-- Make sure the Symfony ruleset is discoverable -->
     <config name="installed_paths" value="vendor/escapestudios/symfony2-coding-standard"/>
 
     <arg value="p"/>
@@ -12,9 +11,19 @@
     <exclude-pattern>vendor/*</exclude-pattern>
 
     <rule ref="Symfony">
-        <!-- Symfony2 standard is strict about some legacy constructs. Keep the bundle pragmatic. -->
         <exclude name="Symfony.Files.LineLength.TooLong"/>
         <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration"/>
+        <exclude name="Symfony.Commenting.ClassComment"/>
+        <exclude name="Symfony.Commenting.FunctionComment"/>
+        <exclude name="PEAR.Commenting.ClassComment"/>
+        <exclude name="PEAR.Commenting.FunctionComment"/>
+        <exclude name="Generic.Commenting.DocComment"/>
+        <exclude name="Squiz.Commenting.ClassComment"/>
+        <exclude name="Squiz.Commenting.FunctionComment"/>
+        <exclude name="Symfony.Commenting.License.Warning"/>
+        <exclude name="Symfony.Functions.Arguments.Invalid"/>
+        <exclude name="Symfony.ControlStructure.YodaConditions.Invalid"/>
     </rule>
 
     <file>src</file>

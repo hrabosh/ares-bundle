@@ -8,13 +8,11 @@ use Hrabo\AresBundle\DTO\Address;
 use Hrabo\AresBundle\DTO\NormalizedCompany;
 use Hrabo\AresBundle\Enum\Dataset;
 
-final class AresCompanyNormalizer
-{
+final class AresCompanyNormalizer {
     /**
      * @param array<string, mixed> $raw
      */
-    public function normalize(Dataset $dataset, string $icoCanonical, array $raw): NormalizedCompany
-    {
+    public function normalize(Dataset $dataset, string $icoCanonical, array $raw): NormalizedCompany {
         $name = $this->firstString($raw, ['obchodniJmeno', 'obchodniJmenoRos', 'nazev', 'firma', 'jmeno']);
         $vatId = $this->firstString($raw, ['dic', 'vatId', 'dph']);
         $legalFormCode = $this->firstScalar($raw, ['pravniForma', 'pravniFormaRos', 'kodPravniForma']);
@@ -47,9 +45,8 @@ final class AresCompanyNormalizer
     /**
      * @param array<string, mixed> $raw
      */
-    private function normalizeAddress(array $raw): ?Address
-    {
-        $addr = null;
+    private function normalizeAddress(array $raw): ?Address {
+        $addr = NULL;
 
         if (isset($raw['sidlo']) && is_array($raw['sidlo'])) {
             $addr = $raw['sidlo'];
@@ -60,7 +57,7 @@ final class AresCompanyNormalizer
         }
 
         if (!is_array($addr)) {
-            return null;
+            return NULL;
         }
 
         /** @var array<string, mixed> $addr */
@@ -74,9 +71,9 @@ final class AresCompanyNormalizer
         $psc = $this->firstScalar($addr, ['psc', 'postalCode']);
         $country = $this->firstString($addr, ['kodStatu', 'countryCode']);
 
-        if (null === $text) {
+        if (NULL === $text) {
             $housePart = $house;
-            if (null !== $house && null !== $orient) {
+            if (NULL !== $house && NULL !== $orient) {
                 $housePart = $house.'/'.$orient.($orientLetter ?? '');
             }
 
@@ -87,10 +84,10 @@ final class AresCompanyNormalizer
                 $city,
                 $psc,
                 $country,
-            ], static fn ($v): bool => null !== $v && $v !== '')));
+            ], static fn ($v): bool => NULL !== $v && $v !== '')));
         }
         if ($text === '') {
-            $text = null;
+            $text = NULL;
         }
 
         return new Address(
@@ -108,10 +105,9 @@ final class AresCompanyNormalizer
 
     /**
      * @param array<string, mixed> $arr
-     * @param list<string> $keys
+     * @param list<string>         $keys
      */
-    private function firstString(array $arr, array $keys): ?string
-    {
+    private function firstString(array $arr, array $keys): ?string {
         foreach ($keys as $k) {
             if (!array_key_exists($k, $arr)) {
                 continue;
@@ -121,19 +117,18 @@ final class AresCompanyNormalizer
             if (is_string($v)) {
                 $v = trim($v);
 
-                return $v !== '' ? $v : null;
+                return $v !== '' ? $v : NULL;
             }
         }
 
-        return null;
+        return NULL;
     }
 
     /**
      * @param array<string, mixed> $arr
-     * @param list<string> $keys
+     * @param list<string>         $keys
      */
-    private function firstScalar(array $arr, array $keys): ?string
-    {
+    private function firstScalar(array $arr, array $keys): ?string {
         foreach ($keys as $k) {
             if (!array_key_exists($k, $arr)) {
                 continue;
@@ -143,17 +138,16 @@ final class AresCompanyNormalizer
             if (is_string($v) || is_int($v) || is_float($v)) {
                 $s = trim((string) $v);
 
-                return $s !== '' ? $s : null;
+                return $s !== '' ? $s : NULL;
             }
         }
 
-        return null;
+        return NULL;
     }
 
-    private function parseDate(?string $v): ?\DateTimeImmutable
-    {
-        if (null === $v || $v === '') {
-            return null;
+    private function parseDate(?string $v): ?\DateTimeImmutable {
+        if (NULL === $v || $v === '') {
+            return NULL;
         }
 
         $v = trim($v);
@@ -168,7 +162,7 @@ final class AresCompanyNormalizer
         try {
             return new \DateTimeImmutable($v);
         } catch (\Throwable) {
-            return null;
+            return NULL;
         }
     }
 }

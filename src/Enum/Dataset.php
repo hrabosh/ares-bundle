@@ -9,8 +9,7 @@ namespace Hrabo\AresBundle\Enum;
  *
  * Dataset codes are used in configuration and output.
  */
-enum Dataset: string
-{
+enum Dataset: string {
     case ARES = 'ares';
     case RES = 'res';
     case NRPZS = 'nrpzs';
@@ -26,8 +25,7 @@ enum Dataset: string
     /**
      * Endpoint prefix under the base URI (https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/).
      */
-    public function endpointPrefix(): string
-    {
+    public function endpointPrefix(): string {
         return match ($this) {
             self::ARES => 'ekonomicke-subjekty',
             self::RES => 'ekonomicke-subjekty-res',
@@ -46,8 +44,7 @@ enum Dataset: string
     /**
      * @return list<self>
      */
-    public static function companyDatasets(): array
-    {
+    public static function companyDatasets(): array {
         return [
             self::ARES,
             self::RES,
@@ -63,8 +60,7 @@ enum Dataset: string
         ];
     }
 
-    public static function fromCode(string $code): self
-    {
+    public static function fromCode(string $code): self {
         $code = strtolower(trim($code));
 
         foreach (self::cases() as $case) {

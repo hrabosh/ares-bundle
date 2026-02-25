@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace Hrabo\AresBundle\DTO;
 
-final readonly class Address
-{
+final readonly class Address {
     public function __construct(
-        public ?string $text = null,
-        public ?string $street = null,
-        public ?string $houseNumber = null,
-        public ?string $orientationNumber = null,
-        public ?string $orientationNumberLetter = null,
-        public ?string $cityPart = null,
-        public ?string $city = null,
-        public ?string $postalCode = null,
-        public ?string $countryCode = null,
+        public ?string $text = NULL,
+        public ?string $street = NULL,
+        public ?string $houseNumber = NULL,
+        public ?string $orientationNumber = NULL,
+        public ?string $orientationNumberLetter = NULL,
+        public ?string $cityPart = NULL,
+        public ?string $city = NULL,
+        public ?string $postalCode = NULL,
+        public ?string $countryCode = NULL,
     ) {
     }
 
     /**
      * @return array<string, string|null>
      */
-    public function toArray(): array
-    {
+    public function toArray(): array {
         return [
             'text' => $this->text,
             'street' => $this->street,

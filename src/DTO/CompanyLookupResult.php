@@ -9,29 +9,26 @@ use Hrabo\AresBundle\Enum\Dataset;
 /**
  * Aggregate result of calling multiple ARES datasets for the same IČO.
  */
-final readonly class CompanyLookupResult
-{
+final readonly class CompanyLookupResult {
     /**
      * @param array<string, DatasetResult> $datasets Map of dataset code => DatasetResult
      */
     public function __construct(
         public string $icoCanonical,
-        public ?NormalizedCompany $bestCompany,
+        public ?NormalizedCompany $company,
         public array $datasets,
         public \DateTimeImmutable $fetchedAt,
     ) {
     }
 
-    public function getDataset(Dataset $dataset): ?DatasetResult
-    {
-        return $this->datasets[$dataset->value] ?? null;
+    public function getDataset(Dataset $dataset): ?DatasetResult {
+        return $this->datasets[$dataset->value] ?? NULL;
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function toArray(): array
-    {
+    public function toArray(): array {
         $datasets = [];
         foreach ($this->datasets as $code => $result) {
             $datasets[$code] = $result->toArray();
@@ -39,7 +36,7 @@ final readonly class CompanyLookupResult
 
         return [
             'ico' => $this->icoCanonical,
-            'bestCompany' => $this->bestCompany?->toArray(),
+            'company' => $this->company?->toArray(),
             'datasets' => $datasets,
             'fetchedAt' => $this->fetchedAt->format(DATE_ATOM),
         ];

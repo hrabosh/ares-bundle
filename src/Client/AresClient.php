@@ -17,8 +17,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class AresClient implements AresClientInterface
-{
+final class AresClient implements AresClientInterface {
     private readonly LoggerInterface $logger;
 
     public function __construct(
@@ -26,49 +25,41 @@ final class AresClient implements AresClientInterface
         private readonly AresRateLimiter $rateLimiter,
         private readonly AresCompanyNormalizer $normalizer,
         private readonly AresClientOptions $options,
-        ?LoggerInterface $logger = null,
+        ?LoggerInterface $logger = NULL,
     ) {
         $this->logger = $logger ?? new \Psr\Log\NullLogger();
     }
 
-    public function findCompanyByIco(string $ico, ?array $datasets = null): CompanyLookupResult
-    {
+    public function findCompanyByIco(string $ico, ?array $datasets = NULL): CompanyLookupResult {
         $icoNorm = IcoNormalizer::normalize($ico);
-        $icoQuery = $icoNorm['query'];
-        $icoCanonical = $icoNorm['canonical'];
-
         $datasetsResolved = $this->resolveDatasets($datasets);
 
         $results = [];
-        $best = null;
+        $company = NULL;
 
         foreach ($datasetsResolved as $dataset) {
-            $datasetResult = $this->getEconomicSubject($icoQuery, $dataset);
+            $datasetResult = $this->getEconomicSubject($icoNorm, $dataset);
 
             $results[$dataset->value] = $datasetResult;
 
-            if (null === $best && $datasetResult->isOk() && null !== $datasetResult->company) {
-                $best = $datasetResult->company;
+            if (NULL === $company && $datasetResult->isOk() && NULL !== $datasetResult->company) {
+                $company = $datasetResult->company;
             }
         }
 
         return new CompanyLookupResult(
-            icoCanonical: $icoCanonical,
-            bestCompany: $best,
+            icoCanonical: $icoNorm,
+            company: $company,
             datasets: $results,
             fetchedAt: new \DateTimeImmutable(),
         );
     }
 
-    public function getEconomicSubject(string $ico, Dataset $dataset = Dataset::ARES): DatasetResult
-    {
+    public function getEconomicSubject(string $ico, Dataset $dataset = Dataset::ARES): DatasetResult {
         $icoNorm = IcoNormalizer::normalize($ico);
-        $icoQuery = $icoNorm['query'];
-        $icoCanonical = $icoNorm['canonical'];
+        $path = sprintf('%s/%s', $dataset->endpointPrefix(), $icoNorm);
 
-        $path = sprintf('%s/%s', $dataset->endpointPrefix(), $icoQuery);
-
-        $start = microtime(true);
+        $start = microtime(TRUE);
         $this->rateLimiter->throttle();
 
         try {
@@ -82,37 +73,37 @@ final class AresClient implements AresClientInterface
                 dataset: $dataset,
                 status: DatasetStatus::ERROR,
                 httpStatus: 0,
-                latencyMs: (microtime(true) - $start) * 1000,
-                company: null,
-                error: new AresError(code: 'TRANSPORT', subCode: null, description: $e->getMessage()),
-                raw: null,
+                latencyMs: (microtime(TRUE) - $start) * 1000,
+                company: NULL,
+                error: new AresError(code: 'TRANSPORT', subCode: NULL, description: $e->getMessage()),
+                raw: NULL,
             );
         }
 
         $httpStatus = 0;
-        $content = null;
+        $content = NULL;
         try {
             $httpStatus = $response->getStatusCode();
-            $content = $response->getContent(false);
+            $content = $response->getContent(FALSE);
         } catch (TransportExceptionInterface $e) {
             return new DatasetResult(
                 dataset: $dataset,
                 status: DatasetStatus::ERROR,
                 httpStatus: 0,
-                latencyMs: (microtime(true) - $start) * 1000,
-                company: null,
-                error: new AresError(code: 'TRANSPORT', subCode: null, description: $e->getMessage()),
-                raw: null,
+                latencyMs: (microtime(TRUE) - $start) * 1000,
+                company: NULL,
+                error: new AresError(code: 'TRANSPORT', subCode: NULL, description: $e->getMessage()),
+                raw: NULL,
             );
         } finally {
-            $latencyMs = (microtime(true) - $start) * 1000;
+            $latencyMs = (microtime(TRUE) - $start) * 1000;
         }
 
         $data = $this->decodeJson($content);
 
         if ($httpStatus === 200 && is_array($data)) {
             /** @var array<string, mixed> $data */
-            $company = $this->normalizer->normalize($dataset, $icoCanonical, $data);
+            $company = $this->normalizer->normalize($dataset, $icoNorm, $data);
 
             return new DatasetResult(
                 dataset: $dataset,
@@ -120,7 +111,7 @@ final class AresClient implements AresClientInterface
                 httpStatus: 200,
                 latencyMs: $latencyMs,
                 company: $company,
-                error: null,
+                error: NULL,
                 raw: $data,
             );
         }
@@ -131,9 +122,9 @@ final class AresClient implements AresClientInterface
                 status: DatasetStatus::NOT_FOUND,
                 httpStatus: 404,
                 latencyMs: $latencyMs,
-                company: null,
+                company: NULL,
                 error: $this->parseAresError($data),
-                raw: is_array($data) ? $data : null,
+                raw: is_array($data) ? $data : NULL,
             );
         }
 
@@ -142,34 +133,31 @@ final class AresClient implements AresClientInterface
             status: DatasetStatus::ERROR,
             httpStatus: $httpStatus,
             latencyMs: $latencyMs,
-            company: null,
-            error: $this->parseAresError($data) ?? new AresError(code: 'HTTP_'.$httpStatus, subCode: null, description: 'Unexpected HTTP status.'),
-            raw: is_array($data) ? $data : null,
+            company: NULL,
+            error: $this->parseAresError($data) ?? new AresError(code: 'HTTP_'.$httpStatus, subCode: NULL, description: 'Unexpected HTTP status.'),
+            raw: is_array($data) ? $data : NULL,
         );
     }
 
-    public function searchEconomicSubjects(Dataset $dataset, array $filter): array
-    {
+    public function searchEconomicSubjects(Dataset $dataset, array $filter): array {
         return $this->postOrFail($dataset, sprintf('%s/vyhledat', $dataset->endpointPrefix()), $filter);
     }
 
-    public function searchCodebooks(array $filter): array
-    {
-        return $this->postOrFail(null, 'ciselniky-nazevniky/vyhledat', $filter);
+    public function searchCodebooks(array $filter): array {
+        return $this->postOrFail(NULL, 'ciselniky-nazevniky/vyhledat', $filter);
     }
 
-    public function searchStandardizedAddresses(array $filter): array
-    {
-        return $this->postOrFail(null, 'standardizovane-adresy/vyhledat', $filter);
+    public function searchStandardizedAddresses(array $filter): array {
+        return $this->postOrFail(NULL, 'standardizovane-adresy/vyhledat', $filter);
     }
 
     /**
      * @param array<string, mixed> $json
+     *
      * @return array<string, mixed>
      */
-    private function postOrFail(?Dataset $dataset, string $path, array $json): array
-    {
-        $start = microtime(true);
+    private function postOrFail(?Dataset $dataset, string $path, array $json): array {
+        $start = microtime(TRUE);
         $this->rateLimiter->throttle();
 
         try {
@@ -183,19 +171,19 @@ final class AresClient implements AresClientInterface
             throw new AresApiException(
                 httpStatus: 0,
                 dataset: $dataset,
-                aresError: new AresError(code: 'TRANSPORT', subCode: null, description: $e->getMessage()),
+                aresError: new AresError(code: 'TRANSPORT', subCode: NULL, description: $e->getMessage()),
                 message: 'ARES API transport error.',
                 previous: $e,
             );
         }
 
         $httpStatus = $response->getStatusCode();
-        $content = $response->getContent(false);
-        $latencyMs = (microtime(true) - $start) * 1000;
+        $content = $response->getContent(FALSE);
+        $latencyMs = (microtime(TRUE) - $start) * 1000;
 
         $data = $this->decodeJson($content);
         if (200 !== $httpStatus || !is_array($data)) {
-            $err = $this->parseAresError($data) ?? new AresError(code: 'HTTP_'.$httpStatus, subCode: null, description: 'ARES API request failed.');
+            $err = $this->parseAresError($data) ?? new AresError(code: 'HTTP_'.$httpStatus, subCode: NULL, description: 'ARES API request failed.');
 
             $this->logger->warning('ARES API request failed', [
                 'httpStatus' => $httpStatus,
@@ -214,15 +202,16 @@ final class AresClient implements AresClientInterface
         }
 
         /** @var array<string, mixed> $data */
+
         return $data;
     }
 
     /**
      * @param list<Dataset|string>|null $datasets
+     *
      * @return list<Dataset>
      */
-    private function resolveDatasets(?array $datasets): array
-    {
+    private function resolveDatasets(?array $datasets): array {
         $datasets = $datasets ?? $this->options->defaultDatasetCodes;
 
         $out = [];
@@ -248,7 +237,7 @@ final class AresClient implements AresClientInterface
             if (isset($seen[$d->value])) {
                 continue;
             }
-            $seen[$d->value] = true;
+            $seen[$d->value] = TRUE;
             $uniq[] = $d;
         }
 
@@ -258,38 +247,37 @@ final class AresClient implements AresClientInterface
     /**
      * @return array<string, mixed>|null
      */
-    private function decodeJson(?string $content): ?array
-    {
-        if (null === $content) {
-            return null;
+    private function decodeJson(?string $content): ?array {
+        if (NULL === $content) {
+            return NULL;
         }
 
         $content = trim($content);
         if ($content === '') {
-            return null;
+            return NULL;
         }
 
-        $decoded = json_decode($content, true);
+        $decoded = json_decode($content, TRUE);
         if (!is_array($decoded)) {
-            return null;
+            return NULL;
         }
 
         /** @var array<string, mixed> $decoded */
+
         return $decoded;
     }
 
-    private function parseAresError(?array $data): ?AresError
-    {
+    private function parseAresError(?array $data): ?AresError {
         if (!is_array($data)) {
-            return null;
+            return NULL;
         }
 
         $code = $this->firstString($data, ['kod', 'code', 'errorCode']);
         $subCode = $this->firstString($data, ['subKod', 'subCode']);
         $desc = $this->firstString($data, ['popis', 'description', 'message', 'chyba']);
 
-        if (null === $code && null === $desc && null === $subCode) {
-            return null;
+        if (NULL === $code && NULL === $desc && NULL === $subCode) {
+            return NULL;
         }
 
         return new AresError($code, $subCode, $desc, $data);
@@ -297,10 +285,9 @@ final class AresClient implements AresClientInterface
 
     /**
      * @param array<string, mixed> $arr
-     * @param list<string> $keys
+     * @param list<string>         $keys
      */
-    private function firstString(array $arr, array $keys): ?string
-    {
+    private function firstString(array $arr, array $keys): ?string {
         foreach ($keys as $k) {
             if (!array_key_exists($k, $arr)) {
                 continue;
@@ -310,7 +297,7 @@ final class AresClient implements AresClientInterface
             if (is_string($v)) {
                 $v = trim($v);
 
-                return $v !== '' ? $v : null;
+                return $v !== '' ? $v : NULL;
             }
 
             if (is_int($v) || is_float($v)) {
@@ -318,6 +305,6 @@ final class AresClient implements AresClientInterface
             }
         }
 
-        return null;
+        return NULL;
     }
 }

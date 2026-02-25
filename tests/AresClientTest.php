@@ -14,10 +14,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class AresClientTest extends TestCase
-{
-    public function testGetEconomicSubjectOk(): void
-    {
+final class AresClientTest extends TestCase {
+    public function testGetEconomicSubjectOk(): void {
         $calls = [];
 
         $mock = new MockHttpClient(
@@ -55,8 +53,7 @@ final class AresClientTest extends TestCase
         self::assertStringEndsWith('/ekonomicke-subjekty/6947', $calls[0][1]);
     }
 
-    public function testFindCompanyByIcoBestCompanyFromSecondDataset(): void
-    {
+    public function testFindCompanyByIcoBestCompanyFromSecondDataset(): void {
         $mock = new MockHttpClient(
             function (string $method, string $url, array $options): MockResponse {
                 if (str_ends_with($url, '/ekonomicke-subjekty/6947')) {
@@ -94,13 +91,12 @@ final class AresClientTest extends TestCase
         self::assertSame(DatasetStatus::OK, $resResult->status);
     }
 
-    private function makeClient(MockHttpClient $httpClient): AresClient
-    {
+    private function makeClient(MockHttpClient $httpClient): AresClient {
         $rateLimiter = new AresRateLimiter(
-            enabled: false,
-            wait: false,
+            enabled: FALSE,
+            wait: FALSE,
             key: 'test',
-            factory: null,
+            factory: NULL,
         );
 
         $options = new AresClientOptions(
@@ -114,7 +110,7 @@ final class AresClientTest extends TestCase
             rateLimiter: $rateLimiter,
             normalizer: new AresCompanyNormalizer(),
             options: $options,
-            logger: null,
+            logger: NULL,
         );
     }
 }

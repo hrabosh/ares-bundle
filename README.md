@@ -19,7 +19,7 @@ The bundle focuses on:
 ## Installation
 
 ```bash
-composer require lustrace/ares-bundle
+composer require hrabo/ares-bundle
 ```
 
 Enable the bundle (if not using Flex auto-discovery):
@@ -28,7 +28,7 @@ Enable the bundle (if not using Flex auto-discovery):
 // config/bundles.php
 return [
     // ...
-    Lustrace\AresBundle\LustraceAresBundle::class => ['all' => true],
+    Hrabo\AresBundle\HraboAresBundle::class => ['all' => true],
 ];
 ```
 
@@ -36,10 +36,10 @@ return [
 
 ## Configuration
 
-Create `config/packages/lustrace_ares.yaml`:
+Create `config/packages/hrabo_ares.yaml`:
 
 ```yaml
-lustrace_ares:
+hrabo_ares:
   base_uri: 'https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/'
   timeout_seconds: 10
 
@@ -86,7 +86,7 @@ Notes:
 ### 1) Aggregate lookup by IČO across datasets
 
 ```php
-use Lustrace\AresBundle\Client\AresClientInterface;
+use Hrabo\AresBundle\Client\AresClientInterface;
 
 final class SomeService
 {
@@ -106,7 +106,7 @@ final class SomeService
 ### 2) Single dataset detail (GET {ico})
 
 ```php
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\Dataset;
 
 $datasetResult = $ares->getEconomicSubject('6947', Dataset::RES);
 
@@ -119,7 +119,7 @@ if ($datasetResult->isOk()) {
 ### 3) Search (POST vyhledat)
 
 ```php
-use Lustrace\AresBundle\Enum\Dataset;
+use Hrabo\AresBundle\Enum\Dataset;
 
 $search = $ares->searchEconomicSubjects(Dataset::ARES, [
     'start' => 0,

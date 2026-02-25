@@ -8,14 +8,13 @@ use Hrabo\AresBundle\DTO\CompanyLookupResult;
 use Hrabo\AresBundle\DTO\DatasetResult;
 use Hrabo\AresBundle\Enum\Dataset;
 
-interface AresClientInterface
-{
+interface AresClientInterface {
     /**
      * Aggregate lookup across multiple datasets for a single IČO.
      *
      * @param list<Dataset|string>|null $datasets When null, defaults to configured datasets.
      */
-    public function findCompanyByIco(string $ico, ?array $datasets = null): CompanyLookupResult;
+    public function findCompanyByIco(string $ico, ?array $datasets = NULL): CompanyLookupResult;
 
     public function getEconomicSubject(string $ico, Dataset $dataset = Dataset::ARES): DatasetResult;
 
@@ -23,6 +22,7 @@ interface AresClientInterface
      * POST /{dataset}/vyhledat
      *
      * @param array<string, mixed> $filter
+     *
      * @return array<string, mixed>
      */
     public function searchEconomicSubjects(Dataset $dataset, array $filter): array;
@@ -31,6 +31,7 @@ interface AresClientInterface
      * POST /ciselniky-nazevniky/vyhledat
      *
      * @param array<string, mixed> $filter
+     *
      * @return array<string, mixed>
      */
     public function searchCodebooks(array $filter): array;
@@ -39,6 +40,7 @@ interface AresClientInterface
      * POST /standardizovane-adresy/vyhledat
      *
      * @param array<string, mixed> $filter
+     *
      * @return array<string, mixed>
      */
     public function searchStandardizedAddresses(array $filter): array;

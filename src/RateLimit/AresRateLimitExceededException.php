@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Hrabo\AresBundle\RateLimit;
 
-final class AresRateLimitExceededException extends \RuntimeException {
+final class AresRateLimitExceededException extends \RuntimeException
+{
     public function __construct(
-        public readonly ?\DateTimeImmutable $retryAt = NULL,
+        public readonly ?\DateTimeImmutable $retryAt = null,
         string $message = 'ARES outgoing rate limit exceeded.',
         int $code = 0,
-        ?\Throwable $previous = NULL,
+        ?\Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
     }

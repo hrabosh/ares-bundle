@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Hrabo\AresBundle\DTO;
 
-final readonly class AresError {
+final readonly class AresError
+{
     public function __construct(
         public ?string $code,
         public ?string $subCode,
         public ?string $description,
         /** @var array<string, mixed>|null */
-        public ?array $raw = NULL,
+        public ?array $raw = null,
     ) {
     }
 

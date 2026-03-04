@@ -7,7 +7,8 @@ namespace Hrabo\AresBundle\DTO;
 use Hrabo\AresBundle\Enum\Dataset;
 use Hrabo\AresBundle\Enum\DatasetStatus;
 
-final readonly class DatasetResult {
+final readonly class DatasetResult
+{
     /**
      * @param array<string, mixed>|null $raw
      */
@@ -16,9 +17,9 @@ final readonly class DatasetResult {
         public DatasetStatus $status,
         public int $httpStatus,
         public float $latencyMs,
-        public ?NormalizedCompany $company = NULL,
-        public ?AresError $error = NULL,
-        public ?array $raw = NULL,
+        public ?NormalizedCompany $company = null,
+        public ?AresError $error = null,
+        public ?array $raw = null,
     ) {
     }
 

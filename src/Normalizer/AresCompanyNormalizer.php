@@ -8,7 +8,8 @@ use Hrabo\AresBundle\DTO\Address;
 use Hrabo\AresBundle\DTO\NormalizedCompany;
 use Hrabo\AresBundle\Enum\Dataset;
 
-final class AresCompanyNormalizer {
+final class AresCompanyNormalizer
+{
     /**
      * @param array<string, mixed> $raw
      */
@@ -46,7 +47,7 @@ final class AresCompanyNormalizer {
      * @param array<string, mixed> $raw
      */
     private function normalizeAddress(array $raw): ?Address {
-        $addr = NULL;
+        $addr = null;
 
         if (isset($raw['sidlo']) && is_array($raw['sidlo'])) {
             $addr = $raw['sidlo'];
@@ -57,7 +58,7 @@ final class AresCompanyNormalizer {
         }
 
         if (!is_array($addr)) {
-            return NULL;
+            return null;
         }
 
         /** @var array<string, mixed> $addr */
@@ -71,9 +72,9 @@ final class AresCompanyNormalizer {
         $psc = $this->firstScalar($addr, ['psc', 'postalCode']);
         $country = $this->firstString($addr, ['kodStatu', 'countryCode']);
 
-        if (NULL === $text) {
+        if (null === $text) {
             $housePart = $house;
-            if (NULL !== $house && NULL !== $orient) {
+            if (null !== $house && null !== $orient) {
                 $housePart = $house.'/'.$orient.($orientLetter ?? '');
             }
 
@@ -84,10 +85,10 @@ final class AresCompanyNormalizer {
                 $city,
                 $psc,
                 $country,
-            ], static fn ($v): bool => NULL !== $v && $v !== '')));
+            ], static fn ($v): bool => null !== $v && $v !== '')));
         }
         if ($text === '') {
-            $text = NULL;
+            $text = null;
         }
 
         return new Address(
@@ -117,11 +118,11 @@ final class AresCompanyNormalizer {
             if (is_string($v)) {
                 $v = trim($v);
 
-                return $v !== '' ? $v : NULL;
+                return $v !== '' ? $v : null;
             }
         }
 
-        return NULL;
+        return null;
     }
 
     /**
@@ -138,16 +139,16 @@ final class AresCompanyNormalizer {
             if (is_string($v) || is_int($v) || is_float($v)) {
                 $s = trim((string) $v);
 
-                return $s !== '' ? $s : NULL;
+                return $s !== '' ? $s : null;
             }
         }
 
-        return NULL;
+        return null;
     }
 
     private function parseDate(?string $v): ?\DateTimeImmutable {
-        if (NULL === $v || $v === '') {
-            return NULL;
+        if (null === $v || $v === '') {
+            return null;
         }
 
         $v = trim($v);
@@ -162,7 +163,7 @@ final class AresCompanyNormalizer {
         try {
             return new \DateTimeImmutable($v);
         } catch (\Throwable) {
-            return NULL;
+            return null;
         }
     }
 }

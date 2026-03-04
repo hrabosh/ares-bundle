@@ -7,7 +7,8 @@ namespace Hrabo\AresBundle\Client;
 /**
  * Immutable configuration for ARES client.
  */
-final readonly class AresClientOptions {
+final readonly class AresClientOptions
+{
     /**
      * @param list<string> $defaultDatasetCodes
      */

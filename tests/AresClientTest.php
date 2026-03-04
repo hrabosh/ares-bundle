@@ -14,7 +14,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-final class AresClientTest extends TestCase {
+final class AresClientTest extends TestCase
+{
     public function testGetEconomicSubjectOk(): void {
         $calls = [];
 
@@ -23,7 +24,7 @@ final class AresClientTest extends TestCase {
                 $calls[] = [$method, $url];
 
                 return new MockResponse(json_encode([
-                    'ico' => '6947',
+                    'ico' => '00006947',
                     'obchodniJmeno' => 'Ministerstvo financí',
                     'dic' => 'CZ00006947',
                     'pravniForma' => '801',
@@ -50,22 +51,22 @@ final class AresClientTest extends TestCase {
 
         self::assertCount(1, $calls);
         self::assertSame('GET', $calls[0][0]);
-        self::assertStringEndsWith('/ekonomicke-subjekty/6947', $calls[0][1]);
+        self::assertStringEndsWith('/ekonomicke-subjekty/00006947', $calls[0][1]);
     }
 
     public function testFindCompanyByIcoBestCompanyFromSecondDataset(): void {
         $mock = new MockHttpClient(
             function (string $method, string $url, array $options): MockResponse {
-                if (str_ends_with($url, '/ekonomicke-subjekty/6947')) {
+                if (str_ends_with($url, '/ekonomicke-subjekty/00006947')) {
                     return new MockResponse(json_encode([
                         'kod' => 'NENALEZENO',
                         'popis' => 'Record not found',
                     ], JSON_THROW_ON_ERROR), ['http_code' => 404]);
                 }
 
-                if (str_ends_with($url, '/ekonomicke-subjekty-res/6947')) {
+                if (str_ends_with($url, '/ekonomicke-subjekty-res/00006947')) {
                     return new MockResponse(json_encode([
-                        'ico' => '6947',
+                        'ico' => '00006947',
                         'obchodniJmeno' => 'Ministerstvo financí',
                     ], JSON_THROW_ON_ERROR), ['http_code' => 200]);
                 }
@@ -80,9 +81,9 @@ final class AresClientTest extends TestCase {
         $result = $ares->findCompanyByIco('6947', [Dataset::ARES, Dataset::RES]);
 
         self::assertSame('00006947', $result->icoCanonical);
-        self::assertNotNull($result->bestCompany);
-        self::assertSame(Dataset::RES, $result->bestCompany->dataset);
-        self::assertSame('Ministerstvo financí', $result->bestCompany->name);
+        self::assertNotNull($result->company);
+        self::assertSame(Dataset::RES, $result->company->dataset);
+        self::assertSame('Ministerstvo financí', $result->company->name);
 
         $aresResult = $result->datasets['ares'];
         self::assertSame(DatasetStatus::NOT_FOUND, $aresResult->status);
@@ -93,10 +94,10 @@ final class AresClientTest extends TestCase {
 
     private function makeClient(MockHttpClient $httpClient): AresClient {
         $rateLimiter = new AresRateLimiter(
-            enabled: FALSE,
-            wait: FALSE,
+            enabled: false,
+            wait: false,
             key: 'test',
-            factory: NULL,
+            factory: null,
         );
 
         $options = new AresClientOptions(
@@ -110,7 +111,7 @@ final class AresClientTest extends TestCase {
             rateLimiter: $rateLimiter,
             normalizer: new AresCompanyNormalizer(),
             options: $options,
-            logger: NULL,
+            logger: null,
         );
     }
 }

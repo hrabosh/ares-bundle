@@ -95,7 +95,7 @@ final class SomeService
     public function run(): void
     {
         $result = $this->ares->findCompanyByIco('00006947'); // or '6947'
-        $best = $result->bestCompany; // NormalizedCompany|null
+        $best = $result->company; // NormalizedCompany|null
 
         // Array for storage/export:
         $payload = $result->toArray();
@@ -152,18 +152,57 @@ $addresses = $ares->searchStandardizedAddresses([
 
 ---
 
+## Error handling contract
+
+- **Input validation**:
+  - Invalid IČO causes an `InvalidArgumentException` from `IcoNormalizer::normalize()`.
+- **GET (company detail)**:
+  - `getEconomicSubject()` and `findCompanyByIco()` do **not** throw on HTTP/API failures.
+  - They always return `DatasetResult` entries with `status`:
+    - `ok` (HTTP 200)
+    - `not_found` (HTTP 404)
+    - `error` (transport issues, invalid responses, non-200/404)
+- **POST endpoints (search/codebooks/addresses)**:
+  - `searchEconomicSubjects()`, `searchCodebooks()`, `searchStandardizedAddresses()` throw `AresApiException` on non-200 responses or invalid responses.
+- **Rate limiting**:
+  - If rate limiting is enabled and `wait=false`, the client may throw `AresRateLimitExceededException`.
+
+---
+
 ## Standardized output
 
 - `CompanyLookupResult` contains:
   - `icoCanonical` (8 digits, left padded with zeros)
-  - `bestCompany` (first successful `NormalizedCompany` in chosen dataset order)
+  - `company` (first successful `NormalizedCompany` in chosen dataset order)
   - `datasets` map: dataset code → `DatasetResult`
-- `DatasetResult` contains:
-  - `status` (`ok|not_found|error`)
-  - `httpStatus`, `latencyMs`
-  - `raw` (decoded JSON, when available)
-  - `company` (normalized fields, when available)
-  - `error` (parsed API error, when available)
+
+---
+
+## Development
+
+### Quality checks (PHPCS + PHPStan)
+
+This project uses:
+- **PHPCS** (Symfony coding standard) for code style
+- **PHPStan** for static analysis
+
+```bash
+# run everything (style + static analysis)
+composer check
+
+# style only
+composer phpcs
+
+# auto-fix style (what can be fixed automatically)
+composer phpcbf
+
+# static analysis only
+composer phpstan
+```
+
+Config files:
+- PHPCS ruleset: `phpcs.xml`
+- PHPStan config: `phpstan.neon`
 
 ---
 

@@ -8,12 +8,13 @@ use Hrabo\AresBundle\Enum\Dataset;
 use Hrabo\AresBundle\Normalizer\AresCompanyNormalizer;
 use PHPUnit\Framework\TestCase;
 
-final class AresCompanyNormalizerTest extends TestCase {
+final class AresCompanyNormalizerTest extends TestCase
+{
     public function testNormalizeCreatesAddressTextWhenMissing(): void {
         $normalizer = new AresCompanyNormalizer();
 
         $company = $normalizer->normalize(Dataset::ARES, '00006947', [
-            'ico' => '6947',
+            'ico' => '00006947',
             'obchodniJmeno' => 'Ministerstvo financí',
             'sidlo' => [
                 'nazevUlice' => 'Letenská',

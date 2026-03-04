@@ -8,13 +8,14 @@ use Hrabo\AresBundle\DTO\CompanyLookupResult;
 use Hrabo\AresBundle\DTO\DatasetResult;
 use Hrabo\AresBundle\Enum\Dataset;
 
-interface AresClientInterface {
+interface AresClientInterface
+{
     /**
      * Aggregate lookup across multiple datasets for a single IČO.
      *
      * @param list<Dataset|string>|null $datasets When null, defaults to configured datasets.
      */
-    public function findCompanyByIco(string $ico, ?array $datasets = NULL): CompanyLookupResult;
+    public function findCompanyByIco(string $ico, ?array $datasets = null): CompanyLookupResult;
 
     public function getEconomicSubject(string $ico, Dataset $dataset = Dataset::ARES): DatasetResult;
 

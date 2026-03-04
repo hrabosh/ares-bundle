@@ -9,7 +9,8 @@ use Hrabo\AresBundle\Enum\Dataset;
 /**
  * Aggregate result of calling multiple ARES datasets for the same IČO.
  */
-final readonly class CompanyLookupResult {
+final readonly class CompanyLookupResult
+{
     /**
      * @param array<string, DatasetResult> $datasets Map of dataset code => DatasetResult
      */
@@ -22,7 +23,7 @@ final readonly class CompanyLookupResult {
     }
 
     public function getDataset(Dataset $dataset): ?DatasetResult {
-        return $this->datasets[$dataset->value] ?? NULL;
+        return $this->datasets[$dataset->value] ?? null;
     }
 
     /**

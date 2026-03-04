@@ -6,16 +6,17 @@ namespace Hrabo\AresBundle\DTO;
 
 use Hrabo\AresBundle\Enum\Dataset;
 
-final readonly class NormalizedCompany {
+final readonly class NormalizedCompany
+{
     public function __construct(
         public string $icoCanonical,
         public Dataset $dataset,
-        public ?string $name = NULL,
-        public ?string $vatId = NULL,
-        public ?string $legalFormCode = NULL,
-        public ?Address $address = NULL,
-        public ?\DateTimeImmutable $establishedAt = NULL,
-        public ?\DateTimeImmutable $terminatedAt = NULL,
+        public ?string $name = null,
+        public ?string $vatId = null,
+        public ?string $legalFormCode = null,
+        public ?Address $address = null,
+        public ?\DateTimeImmutable $establishedAt = null,
+        public ?\DateTimeImmutable $terminatedAt = null,
         /** @var array<string, mixed> */
         public array $extra = [],
     ) {

@@ -6,14 +6,15 @@ namespace Hrabo\AresBundle\RateLimit;
 
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 
-final class AresRateLimiter {
+final class AresRateLimiter
+{
     public function __construct(
         private readonly bool $enabled,
         private readonly bool $wait,
         private readonly string $key,
         private readonly ?RateLimiterFactory $factory,
     ) {
-        if ($this->enabled && NULL === $this->factory) {
+        if ($this->enabled && null === $this->factory) {
             throw new \InvalidArgumentException('Rate limiter is enabled but RateLimiterFactory is not configured.');
         }
     }
@@ -36,9 +37,8 @@ final class AresRateLimiter {
             return;
         }
 
-        $retryAt = NULL;
+        $retryAt = null;
         if (method_exists($rateLimit, 'getRetryAfter')) {
-            /** @var mixed $v */
             $v = $rateLimit->getRetryAfter();
             if ($v instanceof \DateTimeInterface) {
                 $retryAt = \DateTimeImmutable::createFromInterface($v);

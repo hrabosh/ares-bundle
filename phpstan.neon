@@ -1,0 +1,24 @@
+parameters:
+  level: 7
+  paths:
+    - src
+    - tests
+  tmpDir: .phpstan
+  reportUnmatchedIgnoredErrors: true
+
+  ignoreErrors:
+    # Symfony DI configurator helper functions used in bundle services.php
+    - '#(Used )?[Ff]unction Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\(param|service) not found\.#'
+
+    # PHPUnit smoke assertions used as explicit "no exception thrown" statements
+    - '#Call to static method PHPUnit\\Framework\\Assert::assertTrue\(\) with true will always evaluate to true\.#'
+
+    # getRetryAfter() is dynamic across Symfony versions/implementations
+    -
+      identifier: instanceof.alwaysTrue
+      path: src/RateLimit/AresRateLimiter.php
+
+    # PHPStan false positive / harmless in current implementation (to be revisited)
+    -
+      identifier: deadCode.unreachable
+      path: src/Client/AresClient.php

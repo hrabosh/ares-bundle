@@ -9,7 +9,8 @@ namespace Hrabo\AresBundle\Enum;
  *
  * Dataset codes are used in configuration and output.
  */
-enum Dataset: string {
+enum Dataset: string
+{
     case ARES = 'ares';
     case RES = 'res';
     case NRPZS = 'nrpzs';

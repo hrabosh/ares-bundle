@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-03-04
+
 ### Added
 - GitHub Actions CI (PHP 8.1/8.2/8.3) running `composer check` and `composer test`.
 - PHPStan static analysis (`composer phpstan`, included in `composer check`).
 - Error handling contract documentation in README.
+- Development section in README (how to run PHPCS/PHPStan).
 - Unit tests for IČO normalization and rate limiting.
+- `CHANGELOG.md` (Keep a Changelog + SemVer).
 
 ### Changed
 - IČO normalization is canonicalized to 8 digits (left-padded with zeros).
@@ -20,5 +24,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Composer PHP version constraint.
 - Test expectations for canonical IČO.
-
-
